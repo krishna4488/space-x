@@ -11,7 +11,7 @@ render()
            <div className='content'>
             <div className='info'>
            <h1>{this.props.title}</h1>
-           <h2>{this.props.launchdate}</h2>
+           <h1>{this.props.launchdate}</h1>
            </div>
            <p>{this.props.description}</p></div>
         </div>
