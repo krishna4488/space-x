@@ -1,0 +1,35 @@
+.launch
+{
+    height:200px;
+    width: 1000px;
+    box-shadow: 1px 1px 9px 1px darkgray;
+    display: flex;
+    font-family: cursive;
+    color: cadetblue;
+    padding:8px;
+}
+.launch img
+{
+    height:200px;
+    width:200px;
+}
+.content
+{
+
+    margin-left: 20px;
+    width:80%;
+}
+.content .info
+{
+    display: flex;
+    justify-content: space-between;
+}
+.content p{
+    font-size: 16px;
+    line-height: 30px;
+    overflow: hidden;
+    margin-top: 20px;
+    display:-webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
