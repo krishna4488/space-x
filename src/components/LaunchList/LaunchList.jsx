@@ -1,31 +1,48 @@
 import React from "react"
 import { Launch } from "../Launch/Launch"
 import './styles.css'
+import axios from "axios"
 export class LaunchList extends React.Component
-{
-    render()
+{   
+    state={
+        Launches:[]
+    }
+    componentDidMount = () =>{
+    this.getLaunches()
+}
+    getLaunches = () =>
     {
-        return(
+        axios.get("https://api.spacexdata.com/v3/launches").then((response) =>{
+            this.setState(
+                {
+                    Launches:response.data
+                })
+        }).catch((error) =>
+        {
+            console.log(error)
+        })
+    }
 
+    launchlist = () =>
+    {
+        const launchlistComponents=this.state.Launches.map((launch,index) =>{
+            
+            const image=launch.links.flickr_images.length===0 ? "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Soyuz_TMA-9_launch.jpg/255px-Soyuz_TMA-9_launch.jpg":launch.links.flickr_images[0];
+            return <Launch key={"launch_" +index} banner={image} title={launch.mission_name} launchdate={launch.launch_date_local}
+            description={launch.details}/>
+    })
+    return launchlistComponents;
+}
+    render()
+
+    {   
+        console.log(this.state.Launches[0])
+        
+    
+        return(
+            
             <div className="launch-list">
-               <Launch banner="https://farm8.staticflickr.com/7615/16670240949_8d43db0e36_o.jpg" title="Falconsat" launchdate="2006-03-25T10:30:00+12:00"
-      description="Successful first stage burn and transition to second stage,stage burn and transition to second stage
-      stage burn and transition to second stage maximum altitude 289 km, Premature engine
-      maximum altitude 289 km, Premature engine maximum altitude 289 km, Premature engine maximum altitude 289 km, Premature engine
-       maximum altitude 289 km, Premature engine shutdown at T+7 min 30 s, Failed to reach orbit, Failed to recover first stage
-       " />
-       <Launch banner="https://farm8.staticflickr.com/7615/16670240949_8d43db0e36_o.jpg" title="Falconsat" launchdate="2006-03-25T10:30:00+12:00"
-      description="Successful first stage burn and transition to second stage,stage burn and transition to second stage
-      stage burn and transition to second stage maximum altitude 289 km, Premature engine
-      maximum altitude 289 km, Premature engine maximum altitude 289 km, Premature engine maximum altitude 289 km, Premature engine
-       maximum altitude 289 km, Premature engine shutdown at T+7 min 30 s, Failed to reach orbit, Failed to recover first stage
-       " />
-         <Launch banner="https://farm8.staticflickr.com/7615/16670240949_8d43db0e36_o.jpg" title="Falconsat" launchdate="2006-03-25T10:30:00+12:00"
-      description="Successful first stage burn and transition to second stage,stage burn and transition to second stage
-      stage burn and transition to second stage maximum altitude 289 km, Premature engine
-      maximum altitude 289 km, Premature engine maximum altitude 289 km, Premature engine maximum altitude 289 km, Premature engine
-       maximum altitude 289 km, Premature engine shutdown at T+7 min 30 s, Failed to reach orbit, Failed to recover first stage
-       " />
+               {this.launchlist()}
             </div>
         )
     }
